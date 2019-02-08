@@ -16,5 +16,8 @@
   "peerDependencies": {
     "webpack": "^4.0.0",
     "@nrg/core": "^1.0.0-beta.0"
+  },
+  "dependencies": {
+    "node-html-parser": "^1.1.12"
   }
 }
