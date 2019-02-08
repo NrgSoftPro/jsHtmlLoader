@@ -1,0 +1,16 @@
+{
+  "name": "@nrg/html-loader",
+  "version": "1.0.0-beta.0",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NrgSoftPro/jsHtmlLoader.git"
+  },
+  "author": "NrgSoftPro",
+  "license": "MIT",
+  "description": "@nrg/html-loader",
+  "bugs": {
+    "url": "https://github.com/NrgSoftPro/jsHtmlLoader/issues"
+  },
+  "homepage": "https://github.com/NrgSoftPro/jsHtmlLoader"
+}
