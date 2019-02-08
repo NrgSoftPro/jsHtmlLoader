@@ -4,7 +4,7 @@ const Node = require('../Element')
 const Template = require('../../template/Element')
 
 const defaultParentAlias = 'Component'
-const defaultParentPath = '@nrgsoft/core/Component'
+const defaultParentPath = '@nrg/core/Component'
 
 module.exports = class extends Handler {
 

@@ -1,1 +1,1 @@
-# jsHtmlLoader
+# html-loader

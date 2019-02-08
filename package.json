@@ -8,9 +8,13 @@
   },
   "author": "NrgSoftPro",
   "license": "MIT",
-  "description": "@nrg/html-loader",
+  "description": "html loader module for webpack",
   "bugs": {
     "url": "https://github.com/NrgSoftPro/jsHtmlLoader/issues"
   },
-  "homepage": "https://github.com/NrgSoftPro/jsHtmlLoader"
+  "homepage": "https://github.com/NrgSoftPro/jsHtmlLoader",
+  "peerDependencies": {
+    "webpack": "^4.0.0",
+    "@nrg/core": "^1.0.0-beta.0"
+  }
 }
