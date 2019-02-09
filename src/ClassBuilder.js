@@ -10,6 +10,7 @@ const AttrHandler = require('./attr/handler/Attr')
 const ClassHandler = require('./attr/handler/Class')
 const EventHandler = require('./attr/handler/Event')
 const ExtendsHandler = require('./attr/handler/Extends')
+const ImportHandler = require('./attr/handler/Import')
 const InsertHandler = require('./attr/handler/Insert')
 const MountHandler = require('./attr/handler/Mount')
 const PropHandler = require('./attr/handler/Prop')
@@ -33,6 +34,7 @@ module.exports = class {
       ClassHandler,
       EventHandler,
       ExtendsHandler,
+      ImportHandler,
       InsertHandler,
       MountHandler,
       PropHandler,

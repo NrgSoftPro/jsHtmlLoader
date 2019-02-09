@@ -13,7 +13,7 @@ module.exports = class {
     if (!value) {
       template.addGetter(name, `return ${element}`)
     } else {
-      if (template.hasImportAlias(value)) {
+      if (value[0] === value[0].toUpperCase()) {
         template
           .addGetter(name, `return this._${name} || ${value}`)
           .addSetter(name, `this._${name} = value`, triggerOnSet)

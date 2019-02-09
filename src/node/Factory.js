@@ -13,26 +13,20 @@ module.exports = class {
     return this.compose(parse(xml).childNodes[0])
   }
 
-  compose (element, imports = null) {
-    const isRoot = !imports
+  compose (element, isRoot = true) {
     const tagName = element.tagName
     const attrs = this.extractAttrs(element)
     const children = this.extractChildren(element)
 
-    imports = imports || this.extractImports(attrs)
-    const node = imports.has(tagName) ? new Widget(tagName) : new Element(tagName)
-
-    if (isRoot) {
-      node.isRoot = true
-      node.imports = imports
-    }
+    const node = tagName[0] === tagName[0].toUpperCase() ? new Widget(tagName) : new Element(tagName)
+    node.isRoot = isRoot
 
     for (const [name, value] of attrs) {
       node.attrs.push(this.attrFactory.create(name, value, node))
     }
 
     children.forEach(child => {
-      const childNode = typeof child === 'string' ? new Text(child) : this.compose(child, imports)
+      const childNode = typeof child === 'string' ? new Text(child) : this.compose(child, false)
       childNode.parentNode = node
       node.children.push(childNode)
     })
@@ -72,20 +66,6 @@ module.exports = class {
     }
 
     return attrs
-  }
-
-  extractImports (attrs) {
-    const imports = new Map()
-
-    for (const [name, value] of attrs) {
-      const position = name.indexOf(':')
-      if ('import' === name.substr(0, position)) {
-        imports.set(name.substr(position + 1), value)
-        attrs.delete(name)
-      }
-    }
-
-    return imports
   }
 
   extractChildren (element) {

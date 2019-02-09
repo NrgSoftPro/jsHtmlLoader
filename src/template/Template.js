@@ -16,6 +16,7 @@ const joinSetters = Symbol()
 
 const rootVariable = 'this.element'
 const variableSymbol = 'e'
+const defaultParentAlias = 'require(\'@nrg/core\').Component'
 
 const self = class {
 
@@ -29,20 +30,23 @@ const self = class {
     return this.currentVariable
   }
 
-  get hasParent () {
-    return !!this[parentAlias]
-  }
-
   constructor () {
+    this[content] = {imports: [], body: [], constructor: [], initialize: []}
+    this[parentAlias] = defaultParentAlias
     this[imports] = new Map()
     this[events] = new Map()
     this[traits] = new Set()
-    this[content] = {imports: [], body: [], constructor: [], initialize: []}
-    this[counter] = -1
     this[getters] = new Map()
     this[setters] = new Map()
     this[setterTriggers] = new Set()
     this[customTriggers] = new Set()
+    this[counter] = -1
+  }
+
+  addImport (alias, path) {
+    this[imports].set(alias, path)
+
+    return this
   }
 
   setParent (alias) {
@@ -51,43 +55,8 @@ const self = class {
     return this
   }
 
-  hasImportAlias (alias) {
-    return this[imports].has(alias)
-  }
-
-  hasImportPath (path) {
-    return [...this[imports].values()].includes(path)
-  }
-
-  uniqueImport (alias, path) {
-    for (const [a, p] of this[imports]) {
-      if (p === path) {
-        return a
-      }
-    }
-
-    let index = 1
-    let trueAlias = alias
-
-    while (this.hasImportAlias(alias)) {
-      trueAlias = `${alias}${index++}`
-    }
-
-    this.addImport(trueAlias, path)
-
-    return trueAlias
-  }
-
-  addImport (alias, path) {
-    if (this.hasImportAlias(alias)) {
-      throw new Error(`Alias '${alias}' already is imported`)
-    }
-
-    if (this.hasImportPath(path)) {
-      throw new Error(`Path '${path}' already is imported`)
-    }
-
-    this[imports].set(alias, path)
+  addTrait (alias) {
+    this[traits].add(alias)
 
     return this
   }
@@ -98,12 +67,6 @@ const self = class {
     }
 
     this[events].get(event).set(property, fromEvent)
-
-    return this
-  }
-
-  addTrait (alias) {
-    this[traits].add(alias)
 
     return this
   }

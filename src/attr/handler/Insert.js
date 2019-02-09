@@ -9,10 +9,13 @@ module.exports = class {
   handle (attr, element, template) {
     const {name, triggerOnSet} = attr
 
-    const elem = template.uniqueImport('Element', '@nrg/ui/Element')
-
     const getterExpression = `return this._${name}`
-    const setterExpression = `this._${name} = ${elem}.insert(${element}, value)`
+    const setterExpression = `
+    ${element}.innetHTML = ''
+    ${element}.appendChild(value instanceof Node ? value : (value.element || document.createTextNode(value)))
+    
+    this._${name} = value
+    `
 
     template
       .addGetter(name, getterExpression)

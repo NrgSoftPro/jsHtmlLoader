@@ -1,6 +1,6 @@
 {
   "name": "@nrg/html-loader",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.3",
   "main": "index.js",
   "repository": {
     "type": "git",
@@ -14,10 +14,10 @@
   },
   "homepage": "https://github.com/NrgSoftPro/jsHtmlLoader",
   "peerDependencies": {
-    "webpack": "^4.0.0",
-    "@nrg/core": "^1.0.0-beta.0"
+    "webpack": "^4.0.0"
   },
   "dependencies": {
+    "@nrg/core": "^1.0.0-beta.0",
     "node-html-parser": "^1.1.12"
   }
 }

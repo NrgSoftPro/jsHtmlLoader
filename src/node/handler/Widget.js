@@ -13,10 +13,6 @@ module.exports = class extends Handler {
 
     if (node.isRoot) {
       template.setParent(className)
-      for (const entry of node.imports) {
-        template.addImport(...entry)
-      }
-
       template.nextVariable
       attributes.forEach(attr => this.handleAttr(attr, 'this', template))
       children.forEach(child => this.handleNode(child, 'this', template))
