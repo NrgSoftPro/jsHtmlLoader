@@ -21,7 +21,7 @@ module.exports = class {
     } else {
       template
         .addGetter(property, `
-          const names = [${names.join(',')}]
+          const names = ['${names.join('\',\'')}']
           for (const [index, className] of [${classNames.join(',')}].entries()) {
             if (${element}.classList.contains(className)) {
               return names[index]

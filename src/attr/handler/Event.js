@@ -8,14 +8,16 @@ module.exports = class {
   }
 
   handle (attr, element, template) {
-    let {node, name, fromEvent, property} = attr
+    let {node, name, fromEventList} = attr
 
-    if (!property) {
-      property = element.substr(4)
-    } else if (node.constructor === Widget) {
-      property = `${element.substr(4)}.${property}`
-    }
+    fromEventList.forEach(({property, fromEvent}) => {
+      if (!property) {
+        property = element.substr(4)
+      } else if (node.constructor === Widget) {
+        property = `${element.substr(4)}.${property}`
+      }
 
-    template.addEvent(name, fromEvent, property)
+      template.addEvent(name, fromEvent, property)
+    })
   }
 }

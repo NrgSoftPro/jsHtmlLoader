@@ -63,10 +63,10 @@ const self = class {
 
   addEvent (event, fromEvent, property) {
     if (!this[events].has(event)) {
-      this[events].set(event, new Map())
+      this[events].set(event, new Set())
     }
 
-    this[events].get(event).set(property, fromEvent)
+    this[events].get(event).add({property, fromEvent})
 
     return this
   }
@@ -193,8 +193,8 @@ const self = class {
   }
 
   [joinEvents] () {
-    for (const [toEvent, map] of this[events]) {
-      for (const [property, fromEvent] of map) {
+    for (const [toEvent, set] of this[events]) {
+      for (const {property, fromEvent} of set) {
         this.joinInitialize(`this.mapEvent(this${property}, '${fromEvent}', '${toEvent}')`)
       }
     }
@@ -216,8 +216,12 @@ const self = class {
   [joinSetters] () {
     for (const [name, expressions] of this[setters]) {
       if (this[setterTriggers].has(name) && !this[customTriggers].has(name)) {
-        const event = self.setterEventName(name)
-        expressions.push(`this.trigger('${event}', {value: value})`)
+        const beforeSetEvent = self.beforeSetEventName(name)
+        const setEvent = self.setEventName(name)
+        expressions.unshift(`value = event.value`)
+        expressions.unshift(`this.trigger('${beforeSetEvent}', event)`)
+        expressions.unshift(`const event = {value}`)
+        expressions.push(`this.trigger('${setEvent}', event)`)
       }
 
       this.joinBody(`
@@ -229,7 +233,11 @@ const self = class {
     return this
   }
 
-  static setterEventName (name) {
+  static beforeSetEventName (name) {
+    return 'beforeSet' + name.charAt(0).toLocaleUpperCase() + name.slice(1)
+  }
+
+  static setEventName (name) {
     return 'set' + name.charAt(0).toLocaleUpperCase() + name.slice(1)
   }
 }

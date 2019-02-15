@@ -9,14 +9,18 @@ module.exports = class extends DefaultAttr {
   constructor (...args) {
     super(...args)
 
-    this.makeFromEvent()
+    this.makeFromEventList()
   }
 
-  makeFromEvent () {
-    const position = this.value.lastIndexOf('.')
+  makeFromEventList () {
+    this.fromEventList = this.value.trim().split(/\s+/).map(value => {
+      const position = this.value.lastIndexOf('.')
 
-    this.property = this.value.substr(0, position)
-    this.fromEvent = this.value.substr(position + 1)
+      return {
+        property: value.substr(0, position),
+        fromEvent: value.substr(position + 1)
+      }
+    })
 
     return this
   }
